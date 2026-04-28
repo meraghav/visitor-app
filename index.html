@@ -333,24 +333,22 @@ function finalSubmit(){
 
   loader.style.display="block";
 
-  fetch("https://script.google.com/macros/s/AKfycbzyduPQRo4dyp6Q0lCrw-LIS0bNb6m2wZC_H1DxxxNkCvXyBwWY5RxZlcotWh9fYAdt/exec", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      key: "Z1TECH123",   // 🔥 MUST
-      type: "visitor",    // 🔥 MUST
+  let url = "https://script.google.com/macros/s/AKfycbzyduPQRo4dyp6Q0lCrw-LIS0bNb6m2wZC_H1DxxxNkCvXyBwWY5RxZlcotWh9fYAdt/exec";
 
-      name: name.value,
-      meet: meet.value,
-      purpose: purpose.value,
-      mobile: mobile.value,
-      address: address.value,
-      photo: photoData,
-      sign: signData
-    })
-  })
+  let params = new URLSearchParams({
+    key: "Z1TECH123",
+    type: "visitor",
+
+    name: name.value,
+    meet: meet.value,
+    purpose: purpose.value,
+    mobile: mobile.value,
+    address: address.value,
+    photo: photoData,
+    sign: signData
+  });
+
+  fetch(url + "?" + params.toString())
   .then(res => res.text())
   .then(res => {
     console.log(res);
