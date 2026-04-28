@@ -319,7 +319,7 @@ function capture(){
 //  SAVE
 function finalSubmit(){
 
-   if(!photoData){
+  if(!photoData){
     alert("📸 Please capture photo first");
     return;
   }
@@ -331,33 +331,41 @@ function finalSubmit(){
     return;
   }
 
-  step4.style.display="none";
   loader.style.display="block";
 
-  navigator.geolocation.getCurrentPosition(pos=>{
+  fetch("https://script.google.com/macros/s/AKfycbzyduPQRo4dyp6Q0lCrw-LIS0bNb6m2wZC_H1DxxxNkCvXyBwWY5RxZlcotWh9fYAdt/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      key: "Z1TECH123",   // 🔥 MUST
+      type: "visitor",    // 🔥 MUST
 
-    google.script.run.withSuccessHandler(()=>{
-      
-      loader.style.display="none";
-      success.style.display="block";
+      name: name.value,
+      meet: meet.value,
+      purpose: purpose.value,
+      mobile: mobile.value,
+      address: address.value,
+      photo: photoData,
+      sign: signData
+    })
+  })
+  .then(res => res.text())
+  .then(res => {
+    console.log(res);
 
-      setTimeout(()=>location.reload(),2000);
+    loader.style.display="none";
+    success.style.display="block";
 
-    }).saveVisitor({
-      name:name.value,
-      meet:meet.value,
-      purpose:purpose.value,
-      mobile:mobile.value,
-      address:address.value,
-      photo:photoData,
-      sign:signData,
-      lat:pos.coords.latitude,
-      lng:pos.coords.longitude
-    });
-
+    setTimeout(()=>location.reload(),2000);
+  })
+  .catch(err=>{
+    console.error(err);
+    alert("Save failed");
   });
 }
-
+  
 let canvas = document.getElementById("signPad");
 let ctx = canvas.getContext("2d");
 
