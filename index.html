@@ -342,13 +342,13 @@ fetch(url, {
     key: "Z1TECH123",
     type: "visitor",
 
-    name: name.value,
-    meet: meet.value,
-    purpose: purpose.value,
-    mobile: mobile.value,
-    address: address.value,
-    photo: photoData,
-    sign: signData
+  name: document.getElementById("name").value,
+  meet: document.getElementById("meet").value,
+  purpose: document.getElementById("purpose").value,
+  mobile: document.getElementById("mobile").value,
+  address: document.getElementById("address").value,
+  photo: photoData,
+  sign: signData
   })
 })
 .then(res => res.text())
