@@ -287,35 +287,38 @@ function startCamera(){
 
 function capture(){
 
-   if(!stream){
+  if(!stream){
     alert("📸 Start camera first");
     return;
   }
 
   let video = document.getElementById("cam");
 
-  let canvas=document.createElement("canvas");
-  canvas.width=100;
-  canvas.height=100;
+  // Use actual video resolution
+  let canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
 
-  let ctx=canvas.getContext("2d");
-  ctx.drawImage(video,0,0,200,200);
+  let ctx = canvas.getContext("2d");
 
-  photoData = canvas.toDataURL("image/jpeg", 0.5);
+  // Draw without distortion
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  // STOP CAMERA
-   if(!photoData){
+  // Better quality (you can tweak 0.7–1.0)
+  photoData = canvas.toDataURL("image/jpeg", 0.8);
+
+  if(!photoData){
     alert("Photo failed");
     return;
   }
 
-  stream.getTracks().forEach(t=>t.stop());
+  // STOP CAMERA
+  stream.getTracks().forEach(t => t.stop());
 
   // NEXT STEP (SIGNATURE)
   step3.classList.remove("active");
   step4.classList.add("active");
 }
-
 //  SAVE
 function finalSubmit(){
 
