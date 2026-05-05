@@ -98,8 +98,21 @@ button:hover{
   height:200px;
   border-radius:50%;
   overflow:hidden;
-  margin:15px auto;
   box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  margin:20px auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+  
+  .camera::after{
+  content:"";
+  position:absolute;
+  width:140px;
+  height:140px;
+  border:2px dashed #fff;
+  border-radius:50%;
 }
 
 video{
@@ -142,11 +155,18 @@ canvas{
 }
 
 #loader, #success{
-  position:fixed;
+  position:static;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
   z-index:999;
+}
+  #step5{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  min-height:200px;
 }
 </style>
 </head>
@@ -169,7 +189,7 @@ canvas{
 <input id="name" placeholder="Your Name">
 <input id="meet" placeholder="Person to Meet">
 <input id="purpose" placeholder="Purpose">
-<input id="mobile" placeholder="Mobile">
+<input id="mobile" placeholder="Mobile" maxlength="10" inputmode="numeric">
 <input id="address" placeholder="Address">
 
 <button onclick="nextStep()">Next</button>
@@ -199,6 +219,7 @@ canvas{
 </div>
 
 <!-- OUTSIDE STEP -->
+<div id="step5" class="card step" style="text-align:center">
 <div id="loader" style="display:none;text-align:center;margin-top:20px">
   <div class="spinner"></div>
   <p>Submitting...</p>
@@ -206,9 +227,10 @@ canvas{
 
 <div id="success" style="display:none;text-align:center;margin-top:20px">
   <div class="tick">✔</div>
-  <h3>Entry Successful</h3>
+  <h3>Thank you for visiting Z1Tech</h3>
 </div>
 
+</div>
 </div>
 
 <script>
@@ -250,14 +272,19 @@ function nextStep(){
     alert("⚠️ All fields required");
     return;
   }
-
+    
+  if(!/^[6-9]\d{9}$/.test(mobileVal)){
+    alert("📱 Enter Valid 10 digit mobile number ");
+    return;
+  }
+  
   document.getElementById("step2").classList.remove("active");
   document.getElementById("step3").classList.add("active");
 
-  startCamera(); // 🔥 YE MISSING THA
+  startCamera(); 
 }
 
-// CAMERA START (FIXED)
+// CAMERA START
 
 function startCamera(){
 
@@ -327,46 +354,45 @@ function finalSubmit(){
     return;
   }
 
- let signData = document.getElementById("signPad")
-  .toDataURL("image/jpeg", 0.5);
-
-  if(signData.length < 1000){
-    alert("✍️ Signature Do");
+  if(!hasSigned){
+    alert("✍️ Signature is required to proceed.");
     return;
   }
 
-  loader.style.display="block";
+  // STEP CHANGE
+  document.getElementById("step4").classList.remove("active");
+  document.getElementById("step5").classList.add("active");
+
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("success").style.display = "none";
 
   let url = "https://script.google.com/macros/s/AKfycbzyduPQRo4dyp6Q0lCrw-LIS0bNb6m2wZC_H1DxxxNkCvXyBwWY5RxZlcotWh9fYAdt/exec";
 
-fetch(url, {
-  method: "POST",
-  body: JSON.stringify({
-    key: "Z1TECH123",
-    type: "visitor",
-
-  name: document.getElementById("name").value,
-  meet: document.getElementById("meet").value,
-  purpose: document.getElementById("purpose").value,
-  mobile: document.getElementById("mobile").value,
-  address: document.getElementById("address").value,
-  photo: photoData,
-  sign: signData
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify({
+      key: "Z1TECH123",
+      type: "visitor",
+      name: document.getElementById("name").value,
+      meet: document.getElementById("meet").value,
+      purpose: document.getElementById("purpose").value,
+      mobile: document.getElementById("mobile").value,
+      address: document.getElementById("address").value,
+      photo: photoData,
+      sign: document.getElementById("signPad").toDataURL("image/jpeg", 0.5)
+    })
   })
-})
-.then(res => res.text())
-.then(res => {
-  console.log(res);
+  .then(res => res.text())
+  .then(res => {
 
-  loader.style.display="none";
-  success.style.display="block";
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("success").style.display = "block";
 
-  setTimeout(()=>location.reload(),2000);
-})
-.catch(err=>{
-  console.error(err);
-  alert("Save failed");
-});
+    setTimeout(()=>location.reload(),3000);
+  })
+  .catch(err=>{
+    alert("Save failed");
+  });
 }
   
 let canvas = document.getElementById("signPad");
