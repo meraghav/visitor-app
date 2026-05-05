@@ -219,7 +219,7 @@ canvas{
 </div>
 
 <!-- OUTSIDE STEP -->
-<div id="step5" class="card step" style="text-align:center">
+<div id="step5" class="card step">
 <div id="loader" style="display:none;text-align:center;margin-top:20px">
   <div class="spinner"></div>
   <p>Submitting...</p>
@@ -343,8 +343,8 @@ function capture(){
   stream.getTracks().forEach(t => t.stop());
 
   // NEXT STEP (SIGNATURE)
-  step3.classList.remove("active");
-  step4.classList.add("active");
+ document.getElementById("step3").classList.remove("active");
+document.getElementById("step4").classList.add("active");
 }
 //  SAVE
 function finalSubmit(){
