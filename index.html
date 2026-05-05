@@ -478,7 +478,15 @@ function clearSign() {
   ctx.beginPath();
   hasSigned = false;
 }
+function resizeCanvas() {
+  let ratio = window.devicePixelRatio || 1;
+  canvas.width = canvas.offsetWidth * ratio;
+  canvas.height = canvas.offsetHeight * ratio;
+  ctx.scale(ratio, ratio);
+}
 
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 </script>
 
 </body>
