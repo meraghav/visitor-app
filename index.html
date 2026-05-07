@@ -8,111 +8,140 @@ body{
   margin:0;
   font-family:sans-serif;
   background:#f8fafc;
-}
-
-html, body{
   overflow-x:hidden;
 }
 
-/* CENTER BOX */
-.container{
+html, body{
   width:100%;
-  max-width:420px;
-  margin:auto;
-  padding:20px;
+  min-height:100%;
 }
 
-/* STEP 1 CENTER */
+/* MOBILE FULL FIT */
+.container{
+  width:100%;
+  min-height:100vh;
+  padding:16px;
+  box-sizing:border-box;
+}
+
+/* STEP CENTER */
 #step1{
-  height:100vh;
+  min-height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
+  animation:fadeIn 0.6s ease;
 }
 
-/* STEP 2+ TOP LAYOUT */
-.top{
+/* ALL CARDS */
+.card{
+  width:100%;
+  background:white;
+  padding:22px;
+  border-radius:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  box-sizing:border-box;
+  display:none;
+  animation:slideUp 0.4s ease;
+}
+
+/* ACTIVE STEP */
+.active{
   display:block;
-  text-align:center;
+}
+
+/* TOP SPACING */
+.top{
+  padding-top:10px;
 }
 
 /* LOGO */
 .logo{
-  width:90px;
-  margin:10px auto;
+  width:85px;
   display:block;
+  margin:10px auto 20px;
 }
 
-/* TYPING TEXT */
+/* TYPING */
 #typing{
-  font-size:22px;
-  font-weight:bold;
-  margin:20px 0;
-  min-height:30px;
+  font-size:24px;
+  font-weight:700;
+  text-align:center;
+  color:#111827;
 }
 
-/* CARD */
-.card{
-  margin-top:20px;
-  background:white;
-  padding:20px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-  display:none;
+/* LABEL LEFT */
+label{
+  display:block;
+  text-align:left;
+  margin-bottom:6px;
+  margin-top:14px;
+  font-size:14px;
+  font-weight:600;
+  color:#374151;
 }
 
 /* INPUT */
 input{
   width:100%;
-  padding:14px;
-  margin:10px 0;
-  border-radius:12px;
-  border:1px solid #ddd;
+  padding:15px;
+  border-radius:14px;
+  border:1px solid #d1d5db;
   font-size:16px;
   box-sizing:border-box;
+  outline:none;
+  transition:0.2s;
+  background:#fff;
+}
+
+input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,0.1);
 }
 
 /* BUTTON */
 button{
   width:100%;
-  padding:15px;
+  padding:16px;
   background:linear-gradient(135deg,#2563eb,#3b82f6);
   color:white;
   border:none;
-  border-radius:30px;
+  border-radius:40px;
   font-size:16px;
-  margin-top:10px;
-  letter-spacing:0.5px;
-  font-weight:600;
+  margin-top:18px;
+  font-weight:700;
+  letter-spacing:0.3px;
+  transition:0.2s;
 }
 
-button:hover{
-  transform:scale(1.02);
-  transition:0.2s;
+button:active{
+  transform:scale(0.98);
 }
 
 /* CAMERA */
 .camera{
-  width:200px;
-  height:200px;
+  width:75vw;
+  height:75vw;
+  max-width:260px;
+  max-height:260px;
   border-radius:50%;
   overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
   margin:20px auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   position:relative;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
-  
-  .camera::after{
+
+.camera::after{
   content:"";
   position:absolute;
-  width:140px;
-  height:140px;
+  width:65%;
+  height:65%;
   border:2px dashed #fff;
   border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
 }
 
 video{
@@ -121,50 +150,115 @@ video{
   object-fit:cover;
 }
 
-/* STEP HIDE */
-.step{display:none;}
-.active{display:block;}
+/* SIGN PAD */
+#signPad{
+  width:100%;
+  height:160px;
+  border:1px solid #d1d5db;
+  border-radius:14px;
+  background:#fff;
+}
+
+/* STEP 5 */
+#step5{
+  min-height:300px;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+}
+
+#step5.active{
+  display:flex;
+}
+
+/* LOADER */
+#loader{
+  display:none;
+  text-align:center;
+  animation:fadeIn 0.3s ease;
+}
 
 .spinner{
-  width:40px;
-  height:40px;
-  border:4px solid #eee;
-  border-top:4px solid #2563eb;
+  width:55px;
+  height:55px;
+  border:5px solid #e5e7eb;
+  border-top:5px solid #2563eb;
   border-radius:50%;
   animation:spin 1s linear infinite;
   margin:auto;
 }
 
-@keyframes spin{
-  100%{transform:rotate(360deg)}
+/* SUCCESS */
+#success{
+  display:none;
+  text-align:center;
+  animation:popIn 0.5s ease;
 }
 
 .tick{
-  font-size:60px;
-  color:#22c55e;
-  animation:pop 0.5s ease;
-}
-
-@keyframes pop{
-  0%{transform:scale(0)}
-  100%{transform:scale(1)}
-}
-
-canvas{
-  touch-action: none;
-}
-
-#loader, #success{
-  position:static;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  z-index:999;
-}
-  #step5{
-  justify-content:center;
+  width:90px;
+  height:90px;
+  background:#22c55e;
+  border-radius:50%;
+  color:white;
+  font-size:48px;
+  display:flex;
   align-items:center;
-  min-height:200px;
+  justify-content:center;
+  margin:0 auto 15px;
+  animation:bounce 0.6s ease;
+}
+
+/* ANIMATIONS */
+@keyframes spin{
+  100%{
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}
+
+@keyframes slideUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes popIn{
+  from{
+    transform:scale(0.7);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+@keyframes bounce{
+  0%{
+    transform:scale(0);
+  }
+  60%{
+    transform:scale(1.1);
+  }
+  100%{
+    transform:scale(1);
+  }
 }
 </style>
 </head>
@@ -227,14 +321,17 @@ canvas{
 
 <!-- STEP 5 -->
 <div id="step5" class="card step">
-<div id="loader" style="display:none;text-align:center;margin-top:20px">
-  <div class="spinner"></div>
-  <p>Submitting...</p>
-</div>
 
-<div id="success" style="display:none;text-align:center;margin-top:20px">
-  <div class="tick">✔</div>
-  <h3>Thank you for visiting Z1Tech</h3>
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Submitting...</p>
+  </div>
+
+  <div id="success">
+    <div class="tick">✓</div>
+    <h3>Thank you for visiting Z1Tech</h3>
+  </div>
+
 </div>
 
 </div>
@@ -476,6 +573,14 @@ function clearSign() {
   ctx.beginPath();
   hasSigned = false;
 }
+
+  function resizeCanvas(){
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 </script>
 
