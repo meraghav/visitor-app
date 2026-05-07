@@ -48,16 +48,21 @@ html, body{
 @media(max-width:480px){
 
   .container{
-    padding:14px;
+    padding:0;
     align-items:flex-start;
     justify-content:flex-start;
   }
 
   .card{
+    width:100%;
     max-width:100%;
-    min-height:auto;
-    padding:22px 18px;
-    margin-top:20px;
+    min-height:100vh;
+
+    border-radius:0;
+    padding:28px 20px 40px;
+
+    margin:0;
+    box-shadow:none;
   }
 
 }
@@ -85,6 +90,14 @@ html, body{
 #step5.active{
   display:flex;
 }
+  #step4{
+  display:flex;
+  flex-direction:column;
+}
+
+#step4 button:last-child{
+  margin-top:14px;
+}
 
 /* HIDE ALL STEPS */
 .step{
@@ -111,12 +124,15 @@ html, body{
    /* SIGN PAD */
 #signPad{
   width:100%;
-  height:220px;
+  height:55vh;
+
   border:1px solid #d1d5db;
   border-radius:14px;
   background:#fff;
+
   touch-action:none;
   display:block;
+
   margin-top:10px;
 }
 
@@ -166,7 +182,7 @@ button{
   border:none;
   border-radius:40px;
   font-size:16px;
-  margin-top:18px;
+  margin-top:28px;
   font-weight:700;
   letter-spacing:0.3px;
   transition:0.2s;
