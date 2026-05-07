@@ -16,12 +16,49 @@ html, body{
   min-height:100%;
 }
 
-/* MOBILE FULL FIT */
+/* CONTAINER */
 .container{
   width:100%;
   min-height:100vh;
-  padding:16px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
   box-sizing:border-box;
+}
+
+/* CARD */
+.card{
+  width:100%;
+  max-width:430px;   /* width kam */
+  min-height:650px;  /* mobile height badi */
+  
+  background:white;
+  padding:28px 22px;
+  border-radius:28px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  
+  box-sizing:border-box;
+  margin:auto;
+
+  animation:slideUp 0.4s ease;
+}
+
+/* MOBILE */
+@media(max-width:480px){
+
+  .container{
+    padding:14px;
+    align-items:flex-start;
+  }
+
+  .card{
+    max-width:100%;
+    min-height:92vh;   /* almost full mobile screen */
+    border-radius:24px;
+    padding:24px 18px;
+  }
+
 }
 
 /* STEP CENTER */
@@ -32,18 +69,6 @@ html, body{
   justify-content:center;
   align-items:center;
   animation:fadeIn 0.6s ease;
-}
-
-/* ALL CARDS */
-.card{
-  width:100%;
-  background:white;
-  padding:22px;
-  border-radius:24px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  box-sizing:border-box;
-  display:none;
-  animation:slideUp 0.4s ease;
 }
 
 /* ACTIVE STEP */
