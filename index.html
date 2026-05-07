@@ -319,6 +319,16 @@ video{
   text-align:center;
   animation:popIn 0.5s ease;
 }
+  #success h2{
+  margin-top:22px;
+  font-size:28px;
+  color:#111827;
+}
+
+#success h3{
+  color:#6b7280;
+  font-weight:500;
+}
 
 .tick{
   width:110px;
@@ -466,7 +476,6 @@ video{
 <div id="step1">
   <div id="logoAnim" style="width:180px;height:180px"></div>
   <img src="https://i.ibb.co/DHg5tCWx/images-1.png" class="logo">
-  setProgress(1);
   <div id="typing"></div>
 </div>
 
@@ -500,7 +509,6 @@ video{
 <label for="address">Address</label>
 </div>
 
-setProgress(2);
 <button onclick="nextStep()">Next</button>
 
 </div>
@@ -512,7 +520,7 @@ setProgress(2);
 <div class="camera">
   <video id="cam" autoplay playsinline></video>
 </div>
-setProgress(3);
+
 <button onclick="capture()">Capture Photo</button>
 
 </div>
@@ -526,7 +534,6 @@ setProgress(3);
 </div>
 
 <button onclick="clearSign()">Clear</button>
-setProgress(4);
 <button onclick="finalSubmit()">Submit</button>
 
 </div>
@@ -569,6 +576,7 @@ function typing(){
     setTimeout(()=>{
       document.getElementById("step1").style.display="none"; // ADD THIS
       document.getElementById("step2").classList.add("active");
+      setProgress(2);
     },1000);
   }
 }
@@ -605,7 +613,7 @@ function nextStep(){
   
   document.getElementById("step2").classList.remove("active");
   document.getElementById("step3").classList.add("active");
-
+  setProgress(3);
   startCamera(); 
 }
 
@@ -670,6 +678,7 @@ function capture(){
   // NEXT STEP (SIGNATURE)
  document.getElementById("step3").classList.remove("active");
 document.getElementById("step4").classList.add("active");
+  setProgress(4);
 }
 //  SAVE
 function finalSubmit(){
@@ -708,15 +717,16 @@ function finalSubmit(){
     })
   })
   .then(res => res.text())
-  confetti({
-  particleCount:180,
-  spread:90,
-  origin:{y:0.6}
-});
   .then(res => {
 
     document.getElementById("loader").style.display = "none";
     document.getElementById("success").style.display = "block";
+    
+  confetti({
+  particleCount:180,
+  spread:90,
+  origin:{y:0.6}
+   });
 
     setTimeout(()=>location.reload(),3000);
   })
