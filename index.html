@@ -461,19 +461,23 @@ video{
 
 .field{
   position:relative;
-  margin-top:30px;
+  margin-top:32px;
 }
 
 /* INPUT */
 .field input{
+
   width:100%;
   height:62px;
 
-  padding:20px 14px 10px;
+  padding:18px 16px;
 
   font-size:16px;
+  font-weight:500;
 
-  border:1.8px solid #cbd5e1;
+  color:#111827;
+
+  border:2px solid #d1d5db;
   border-radius:16px;
 
   outline:none;
@@ -492,19 +496,21 @@ video{
   left:14px;
   top:19px;
 
-  padding:0 6px;
-
-  font-size:16px;
-  color:#64748b;
+  padding:0 8px;
 
   background:#fff;
 
+  color:#94a3b8;
+
+  font-size:16px;
+  font-weight:500;
+
   pointer-events:none;
 
-  transition:0.22s ease;
+  transition:0.2s ease;
 }
 
-/* INPUT FOCUS */
+/* FOCUS BORDER */
 .field input:focus{
 
   border-color:#2563eb;
@@ -515,7 +521,7 @@ video{
 
 /* FLOAT EFFECT */
 .field input:focus + label,
-.field input:valid + label{
+.field input:not(:placeholder-shown) + label{
 
   top:-10px;
 
@@ -525,7 +531,8 @@ video{
 
   color:#2563eb;
 }
-  .progressWrap{
+
+.progressWrap{
   position:fixed;
   top:0;
   left:0;
