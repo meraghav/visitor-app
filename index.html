@@ -2,13 +2,24 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
-body{
+  body{
   margin:0;
   font-family:sans-serif;
-  background:#f8fafc;
   overflow-x:hidden;
+
+  background:linear-gradient(-45deg,#f8fafc,#eef4ff,#f1f5f9,#e0ecff);
+  background-size:400% 400%;
+  animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
 html, body{
@@ -28,20 +39,27 @@ html, body{
 }
 
 /* CARD */
-.card{
+  .card{
   width:100%;
-  max-width:430px;   /* width kam */
-  min-height:650px;  /* mobile height badi */
-  
-  background:white;
-  padding:28px 22px;
-  border-radius:28px;
+  max-width:430px;
+  min-height:100vh;
   box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  
+
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(12px);
+
+  padding:28px 20px 40px;
   box-sizing:border-box;
+
+  border-radius:0;
   margin:auto;
 
-  animation:slideUp 0.4s ease;
+  transform:translateX(40px);
+  opacity:0;
+
+  transition:
+    transform 0.45s ease,
+    opacity 0.45s ease;
 }
 
 /* MOBILE */
@@ -106,6 +124,8 @@ html, body{
 /* ACTIVE STEP */
 .active{
   display:block;
+  transform:translateX(0);
+  opacity:1;
 }
 
 /* TOP SPACING */
@@ -118,6 +138,21 @@ html, body{
   width:85px;
   display:block;
   margin:10px auto 20px;
+}
+  .signWrap{
+  position:relative;
+}
+
+.signGuide{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+
+  color:#cbd5e1;
+  font-size:28px;
+  font-weight:700;
+  pointer-events:none;
 }
 
    /* SIGN PAD */
@@ -176,44 +211,83 @@ input:focus{
 button{
   width:100%;
   padding:16px;
+
   background:linear-gradient(135deg,#2563eb,#3b82f6);
-  color:white;
+
+  color:#fff;
   border:none;
+
   border-radius:40px;
+
   font-size:16px;
-  margin-top:28px;
   font-weight:700;
-  letter-spacing:0.3px;
-  transition:0.2s;
+
+  margin-top:28px;
+
+  box-shadow:0 10px 25px rgba(37,99,235,0.25);
+
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 }
 
 button:active{
-  transform:scale(0.98);
+  transform:scale(0.96);
+  box-shadow:0 4px 12px rgba(37,99,235,0.2);
 }
 
 /* CAMERA */
 .camera{
-  width:75vw;
-  height:75vw;
-  max-width:260px;
-  max-height:260px;
+  width:78vw;
+  height:78vw;
+  max-width:290px;
+  max-height:290px;
+
   border-radius:50%;
   overflow:hidden;
-  margin:20px auto;
+  margin:30px auto;
   position:relative;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+  box-shadow:
+    0 0 0 8px rgba(37,99,235,0.08),
+    0 0 35px rgba(37,99,235,0.25);
+
+  animation:pulseCam 2s infinite;
+}
+
+.camera::before{
+  content:'';
+  position:absolute;
+  width:100%;
+  height:4px;
+
+  background:rgba(59,130,246,0.8);
+
+  top:0;
+  left:0;
+
+  animation:scan 2.4s linear infinite;
+
+  z-index:2;
 }
 
 .camera::after{
-  content:"";
+  content:'';
   position:absolute;
-  width:65%;
-  height:65%;
-  border:2px dashed #fff;
+  inset:12%;
+  border:2px dashed rgba(255,255,255,0.9);
   border-radius:50%;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
+}
+
+@keyframes pulseCam{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.02);}
+  100%{transform:scale(1);}
+}
+
+@keyframes scan{
+  0%{top:10%;}
+  100%{top:85%;}
 }
 
 video{
@@ -247,17 +321,40 @@ video{
 }
 
 .tick{
-  width:90px;
-  height:90px;
-  background:#22c55e;
+  width:110px;
+  height:110px;
+
   border-radius:50%;
-  color:white;
-  font-size:48px;
+
+  background:#22c55e;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  margin:0 auto 15px;
-  animation:bounce 0.6s ease;
+
+  color:#fff;
+  font-size:56px;
+  font-weight:bold;
+
+  margin:auto;
+
+  animation:tickPop 0.6s ease;
+
+  box-shadow:0 10px 30px rgba(34,197,94,0.35);
+}
+
+@keyframes tickPop{
+  0%{
+    transform:scale(0);
+  }
+
+  60%{
+    transform:scale(1.12);
+  }
+
+  100%{
+    transform:scale(1);
+  }
 }
 
 /* ANIMATIONS */
@@ -309,16 +406,67 @@ video{
     transform:scale(1);
   }
 }
+
+  .field{
+  position:relative;
+  margin-top:26px;
+}
+
+.field input{
+  width:100%;
+  height:58px;
+  padding:18px 14px 8px;
+}
+
+.field label{
+  position:absolute;
+  left:14px;
+  top:18px;
+  color:#6b7280;
+  background:#fff;
+  padding:0 4px;
+  transition:0.2s ease;
+  pointer-events:none;
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label{
+  top:-9px;
+  font-size:12px;
+  color:#2563eb;
+}
+  .progressWrap{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:5px;
+  background:#dbeafe;
+  z-index:9999;
+}
+
+.progressBar{
+  width:25%;
+  height:100%;
+  background:linear-gradient(90deg,#2563eb,#60a5fa);
+  transition:0.4s ease;
+  border-radius:20px;
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
+  <div class="progressWrap">
+  <div class="progressBar" id="progressBar"></div>
+</div>
 
 <!-- STEP 1 -->
 <div id="step1">
+  <div id="logoAnim" style="width:180px;height:180px"></div>
   <img src="https://i.ibb.co/DHg5tCWx/images-1.png" class="logo">
+  setProgress(1);
   <div id="typing"></div>
 </div>
 
@@ -326,22 +474,33 @@ video{
 <div id="step2" class="card step top">
 
 <img src="https://i.ibb.co/DHg5tCWx/images-1.png" class="logo">
-
-<label for="name">Your Name</label>
+  
+<div class="field">
 <input id="name" placeholder="Your Name">
-
-<label for="meet">Person to Meet</label>
+<label for="name">Your Name</label>
+</div>
+  
+<div class="field">
 <input id="meet" placeholder="Person to Meet">
+<label for="meet">Person to Meet</label>
+</div>
 
-<label for="purpose">Purpose</label>
+<div class="field">
 <input id="purpose" placeholder="Purpose">
+<label for="purpose">Purpose</label>
+</div>
 
-<label for="mobile">Mobile</label>
+<div class="field">
 <input id="mobile" placeholder="Mobile" maxlength="10" inputmode="numeric">
+<label for="mobile">Mobile</label>
+</div>
 
-<label for="address">Address</label>
+<div class="field">
 <input id="address" placeholder="Address">
+<label for="address">Address</label>
+</div>
 
+setProgress(2);
 <button onclick="nextStep()">Next</button>
 
 </div>
@@ -353,7 +512,7 @@ video{
 <div class="camera">
   <video id="cam" autoplay playsinline></video>
 </div>
-
+setProgress(3);
 <button onclick="capture()">Capture Photo</button>
 
 </div>
@@ -361,9 +520,13 @@ video{
 <!-- STEP 4 SIGN -->
 <div id="step4" class="card step">
 
-<canvas id="signPad"></canvas>
+<div class="signWrap">
+  <div class="signGuide" id="signGuide">Sign Here</div>
+  <canvas id="signPad"></canvas>
+</div>
 
 <button onclick="clearSign()">Clear</button>
+setProgress(4);
 <button onclick="finalSubmit()">Submit</button>
 
 </div>
@@ -378,6 +541,7 @@ video{
 
   <div id="success">
     <div class="tick">✓</div>
+    <h2>Visitor Registered</h2>
     <h3>Thank you for visiting Z1Tech</h3>
   </div>
 
@@ -408,8 +572,17 @@ function typing(){
     },1000);
   }
 }
+   lottie.loadAnimation({
+  container:document.getElementById('logoAnim'),
+  renderer:'svg',
+  loop:true,
+  autoplay:true,
+  path:'https://assets1.lottiefiles.com/packages/lf20_jcikwtux.json'
+});
 
 typing();
+
+ 
 
 // NEXT STEP
 function nextStep(){
@@ -535,6 +708,11 @@ function finalSubmit(){
     })
   })
   .then(res => res.text())
+  confetti({
+  particleCount:180,
+  spread:90,
+  origin:{y:0.6}
+});
   .then(res => {
 
     document.getElementById("loader").style.display = "none";
@@ -577,6 +755,7 @@ function getPosition(e) {
 
 // START DRAW
 function startDrawing(e) {
+  document.getElementById('signGuide').style.display='none';
   e.preventDefault();
   drawing = true;
 
@@ -617,9 +796,21 @@ canvas.addEventListener("mouseleave", stopDrawing);
 
 // Clear signature
 function clearSign() {
+  document.getElementById('signGuide').style.display='block';
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
   hasSigned = false;
+}
+  function setProgress(step){
+
+  let widths={
+    1:'25%',
+    2:'50%',
+    3:'75%',
+    4:'100%'
+  };
+
+  document.getElementById('progressBar').style.width=widths[step];
 }
 
 </script>
