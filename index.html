@@ -474,22 +474,19 @@ video{
 
 .field{
   position:relative;
-  margin-top:22px;
+  margin-top:20px;
 }
 
-/* INPUT */
 .field input{
   width:100%;
+  height:56px;
 
-  height:58px;
-
-  padding:20px 16px 8px;
+  padding:18px 16px 0 16px;
 
   font-size:16px;
   font-weight:500;
 
   color:#111827;
-
   background:#fff;
 
   border:2px solid #d1d5db;
@@ -498,32 +495,30 @@ video{
   outline:none;
   box-sizing:border-box;
 
-  transition:.22s ease;
+  transition:.2s ease;
 }
 
-/* FOCUS */
 .field input:focus{
   border-color:#2563eb;
-
-  box-shadow:
-    0 0 0 3px rgba(37,99,235,.08);
+  box-shadow:0 0 0 3px rgba(37,99,235,.08);
 }
 
-/* LABEL */
 .field label{
   position:absolute;
 
-  left:14px;
-  top:17px;
+  left:16px;
+  top:50%;
 
-  padding:0 8px;
+  transform:translateY(-50%);
 
-  font-size:15px;
+  font-size:16px;
   font-weight:500;
 
   color:#94a3b8;
 
   background:#fff;
+
+  padding:0 6px;
 
   pointer-events:none;
 
@@ -534,7 +529,9 @@ video{
 .field input:focus + label,
 .field input:not(:placeholder-shown) + label{
 
-  top:-9px;
+  top:0;
+
+  transform:translateY(-50%);
 
   font-size:12px;
 
