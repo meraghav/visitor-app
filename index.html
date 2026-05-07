@@ -545,91 +545,72 @@ let ctx = canvas.getContext("2d");
 let drawing = false;
 let hasSigned = false;
 
-/* HIGH QUALITY */
-function resizeCanvas(){
+// Better stroke style
+ctx.lineWidth = 2.5;
+ctx.lineCap = "round";
+ctx.lineJoin = "round";
 
-  const ratio = window.devicePixelRatio || 1;
-
-  canvas.width = canvas.offsetWidth * ratio;
-  canvas.height = canvas.offsetHeight * ratio;
-
-  ctx.scale(ratio, ratio);
-
-  ctx.lineWidth = 2.5;
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.strokeStyle = "#111";
-}
-
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-/* GET POSITION */
-function getPosition(e){
-
+// Get position helper
+function getPosition(e) {
   let rect = canvas.getBoundingClientRect();
 
-  if(e.touches){
+  if (e.touches) {
     return {
-      x:e.touches[0].clientX - rect.left,
-      y:e.touches[0].clientY - rect.top
+      x: e.touches[0].clientX - rect.left,
+      y: e.touches[0].clientY - rect.top
+    };
+  } else {
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
     };
   }
-
-  return {
-    x:e.clientX - rect.left,
-    y:e.clientY - rect.top
-  };
 }
 
-/* START */
-function startDrawing(e){
-
+// START DRAW
+function startDrawing(e) {
+  e.preventDefault();
   drawing = true;
-  hasSigned = true;
 
-  const pos = getPosition(e);
-
+  let pos = getPosition(e);
   ctx.beginPath();
   ctx.moveTo(pos.x, pos.y);
-
-  e.preventDefault();
 }
 
-/* DRAW */
-function draw(e){
+// DRAW
+function draw(e) {
+  if (!drawing) return;
 
-  if(!drawing) return;
+  e.preventDefault();
+  hasSigned = true;
 
-  const pos = getPosition(e);
+  let pos = getPosition(e);
 
   ctx.lineTo(pos.x, pos.y);
   ctx.stroke();
-
-  e.preventDefault();
 }
 
-/* STOP */
-function stopDrawing(){
-
+// STOP DRAW
+function stopDrawing(e) {
   drawing = false;
+  ctx.beginPath();
 }
 
-/* TOUCH */
-canvas.addEventListener("touchstart", startDrawing,{passive:false});
-canvas.addEventListener("touchmove", draw,{passive:false});
+// Touch events
+canvas.addEventListener("touchstart", startDrawing);
+canvas.addEventListener("touchmove", draw);
 canvas.addEventListener("touchend", stopDrawing);
 
-/* MOUSE */
+// Mouse events (NEW)
 canvas.addEventListener("mousedown", startDrawing);
 canvas.addEventListener("mousemove", draw);
 canvas.addEventListener("mouseup", stopDrawing);
 canvas.addEventListener("mouseleave", stopDrawing);
 
-/* CLEAR */
-function clearSign(){
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+// Clear signature
+function clearSign() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
   hasSigned = false;
 }
 
