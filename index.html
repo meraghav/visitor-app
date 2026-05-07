@@ -39,19 +39,27 @@ html, body{
 }
 
 /* CARD */
-  .card{
+ /* CARD */
+.card{
   width:100%;
   max-width:430px;
-  min-height:100vh;
+
+  min-height:92dvh;
+
   box-shadow:0 10px 30px rgba(0,0,0,0.08);
 
+  border:1px solid rgba(255,255,255,0.5);
+
   background:rgba(255,255,255,0.95);
+
   backdrop-filter:blur(12px);
 
-  padding:28px 20px 40px;
+  padding:28px 20px 70px;
+
   box-sizing:border-box;
 
-  border-radius:0;
+  border-radius:32px;
+
   margin:auto;
 
   transform:translateX(40px);
@@ -66,25 +74,39 @@ html, body{
 @media(max-width:480px){
 
   .container{
-    padding:0;
+    padding:12px;
     align-items:flex-start;
     justify-content:flex-start;
   }
 
   .card{
+
     width:100%;
     max-width:100%;
-    min-height:100vh;
 
-    border-radius:0;
-    padding:28px 20px 40px;
+    min-height:92dvh;
+
+    border-radius:28px;
+
+    padding:
+      26px
+      18px
+      90px;
 
     margin:0;
-    box-shadow:none;
+
+    box-shadow:
+      0 8px 25px rgba(0,0,0,0.08);
   }
 
 }
-
+  
+#loader p{
+  margin-top:18px;
+  color:#374151;
+  font-size:18px;
+  font-weight:600;
+}
 /* STEP CENTER */
 #step1{
   min-height:100vh;
@@ -116,9 +138,29 @@ html, body{
   margin-top:14px;
 }
 
-/* HIDE ALL STEPS */
+/* ALL STEPS */
 .step{
   display:none;
+  opacity:0;
+  transform:translateX(30px);
+}
+
+.step.active{
+  display:block;
+  opacity:1;
+  transform:translateX(0);
+  animation:slidePage .4s ease;
+}
+
+@keyframes slidePage{
+  from{
+    opacity:0;
+    transform:translateX(30px);
+  }
+  to{
+    opacity:1;
+    transform:translateX(0);
+  }
 }
   
 /* ACTIVE STEP */
@@ -153,6 +195,7 @@ html, body{
   font-size:28px;
   font-weight:700;
   pointer-events:none;
+  transition:0.3s ease;
 }
 
    /* SIGN PAD */
@@ -222,7 +265,7 @@ button{
   font-size:16px;
   font-weight:700;
 
-  margin-top:28px;
+  margin-top:38px;
 
   box-shadow:0 10px 25px rgba(37,99,235,0.25);
 
@@ -232,7 +275,7 @@ button{
 }
 
 button:active{
-  transform:scale(0.96);
+  transform:translateY(-1px);
   box-shadow:0 4px 12px rgba(37,99,235,0.2);
 }
 
@@ -242,7 +285,7 @@ button:active{
   height:78vw;
   max-width:290px;
   max-height:290px;
-
+  border:4px solid rgba(255,255,255,0.5);
   border-radius:50%;
   overflow:hidden;
   margin:30px auto;
@@ -722,6 +765,8 @@ function finalSubmit(){
     document.getElementById("loader").style.display = "none";
     document.getElementById("success").style.display = "block";
     
+    setProgress(5);
+    
   confetti({
   particleCount:180,
   spread:90,
@@ -736,6 +781,24 @@ function finalSubmit(){
 }
   
 let canvas = document.getElementById("signPad");
+  function resizeCanvas(){
+
+  const ratio = Math.max(window.devicePixelRatio || 1,1);
+
+  canvas.width = canvas.offsetWidth * ratio;
+  canvas.height = canvas.offsetHeight * ratio;
+
+  canvas.getContext("2d").scale(ratio,ratio);
+
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+}
+
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
+  
 let ctx = canvas.getContext("2d");
 
 let drawing = false;
@@ -775,16 +838,20 @@ function startDrawing(e) {
 }
 
 // DRAW
-function draw(e) {
-  if (!drawing) return;
+function draw(e){
+
+  if(!drawing) return;
 
   e.preventDefault();
+
   hasSigned = true;
 
   let pos = getPosition(e);
 
-  ctx.lineTo(pos.x, pos.y);
-  ctx.stroke();
+  requestAnimationFrame(()=>{
+    ctx.lineTo(pos.x,pos.y);
+    ctx.stroke();
+  });
 }
 
 // STOP DRAW
