@@ -545,20 +545,19 @@ video{
 
 /* FLOAT LABEL */
 .field input:focus + label,
-.field input:not(:focus):valid + label{
+.field input:not(:placeholder-shown) + label{
 
   top:0;
-
   transform:translateY(-50%);
 
   font-size:12px;
-
   font-weight:700;
 
   color:#2563eb;
 
   box-shadow:0 0 0 4px #fff;
 }
+  
 .progressWrap{
   position:fixed;
   top:0;
@@ -600,31 +599,32 @@ video{
 <img src="https://i.ibb.co/DHg5tCWx/images-1.png" class="logo">
 
 <div class="field">
-<input type="text" id="name" required>
+<input type="text" id="name" placeholder=" " required>
 <label for="name">Your Name</label>
 </div>
   
 <div class="field">
-<input type="text" id="meet" required>
+<input type="text" id="meet" placeholder=" " required>
 <label for="meet">Person to Meet</label>
 </div>
 
 <div class="field">
-<input type="text" id="purpose" required>
+<input type="text" id="purpose" placeholder=" " required>
 <label for="purpose">Purpose</label>
 </div>
 
 <div class="field">
-<input type="text" id="mobile" maxlength="10" inputmode="numeric" required>
+<input type="text" id="mobile" placeholder=" " maxlength="10" inputmode="numeric" required>
 <label for="mobile">Mobile</label>
 </div>
 
 <div class="field">
-<input type="text" id="address" required>
+<input type="text" id="address" placeholder=" " required>
 <label for="address">Address</label>
 </div>
 
-<button onclick="nextStep()">Next</button>
+
+<button type="button" onclick="nextStep()">Next</button>
 
 </div>
 
@@ -636,7 +636,7 @@ video{
   <video id="cam" autoplay playsinline></video>
 </div>
 
-<button onclick="capture()">Capture Photo</button>
+<button type="button" onclick="capture()">Capture Photo</button>
 
 </div>
 
@@ -649,8 +649,8 @@ video{
 </div>
   
 <div class="actionButtons">
-<button onclick="clearSign()">Clear</button>
-<button onclick="finalSubmit()">Submit</button>
+<button type="button" onclick="clearSign()">Clear</button>
+<button type="button" onclick="finalSubmit()">Submit</button>
 </div>
   
 </div>
