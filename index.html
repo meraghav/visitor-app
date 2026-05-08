@@ -559,6 +559,47 @@ video{
   transition:0.4s ease;
   border-radius:20px;
 }
+  /* Container must be relative so the label can be absolute inside it */
+.input-group {
+  position: relative;
+  margin-top: 20px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+}
+
+/* 1. Position the label over the input area */
+.input-label {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #999;
+  pointer-events: none; /* Allows clicking "through" the label to the input */
+  transition: all 0.2s ease;
+}
+
+
+.input-field:focus + .input-label,
+.input-field:not(:placeholder-shown) + .input-label {
+  top: -12px;
+  left: 8px;
+  font-size: 12px;
+  color: #007bff;
+  background-color: white;
+  padding: 0 4px;
+}
+
+/* Optional: change border color on focus */
+.input-field:focus {
+  border-color: #007bff;
+}
+
 </style>
 </head>
 
@@ -580,7 +621,12 @@ video{
 <div id="step2" class="card step top">
 
 <img src="https://i.ibb.co/DHg5tCWx/images-1.png" class="logo">
-  
+
+  <div class="input-group">
+  <input type="text" id="name" class="input-field" placeholder=" " autocomplete="off">
+  <label for="name" class="input-label">Full Name</label>
+</div>
+
 <div class="field">
 <input type="text" id="name" placeholder=" " required>
 <label for="name">Your Name</label>
