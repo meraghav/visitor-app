@@ -1125,7 +1125,7 @@ function finalSubmit(){
       mobile: document.getElementById("mobile").value,
       address: document.getElementById("address").value,
       photo: photoData,
-      sign: document.getElementById("signPad").toDataURL("image/jpeg", 0.5)
+      sign: document.getElementById("signPad").toDataURL("image/png")
     })
   })
   .then(res => res.text())
