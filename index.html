@@ -43,7 +43,7 @@ html, body{
   width:100%;
   max-width:430px;
 
-  min-height:92dvh;
+  min-height:auto;
 
   box-shadow:0 10px 30px rgba(0,0,0,0.08);
 
@@ -83,7 +83,7 @@ html, body{
     width:100%;
     max-width:100%;
 
-    min-height:92dvh;
+    min-height:auto;
 
     border-radius:28px;
 
@@ -200,18 +200,25 @@ html, body{
    /* SIGN PAD */
 #signPad{
   width:100%;
-  height:55vh;
+  height:220px;
 
   border:1px solid #d1d5db;
   border-radius:14px;
+
   background:#fff;
 
   touch-action:none;
   display:block;
-  -webkit-user-select:none;
-  user-select:none;
 
   margin-top:10px;
+}
+
+  @media(max-width:480px){
+
+  #signPad{
+    height:180px;
+  }
+
 }
 
 /* TYPING */
@@ -474,28 +481,26 @@ video{
 
 .field{
   position:relative;
-  margin-top:20px;
+  margin-top:18px;
 }
 
 .field input{
   width:100%;
-  height:60px;
+  height:56px;
 
-  padding:22px 16px 6px;
+  padding:20px 16px 0 16px;
 
   font-size:16px;
   font-weight:500;
-
-  color:#111827;
-  background:#fff;
 
   border:2px solid #d1d5db;
   border-radius:18px;
 
   outline:none;
-  box-sizing:border-box;
+  background:#fff;
 
   transition:.2s ease;
+  box-sizing:border-box;
 }
 
 .field input:focus{
@@ -503,6 +508,7 @@ video{
   box-shadow:0 0 0 3px rgba(37,99,235,.08);
 }
 
+/* LABEL */
 .field label{
   position:absolute;
 
@@ -516,18 +522,18 @@ video{
 
   color:#94a3b8;
 
-  pointer-events:none;
-
-  transition:all .2s ease;
-
-  background:rgba(255,255,255,0.95);
+  background:#fff;
 
   padding:0 6px;
 
   line-height:1;
+
+  pointer-events:none;
+
+  transition:.18s ease;
 }
 
-/* FLOAT */
+/* FLOAT EFFECT */
 .field input:focus + label,
 .field input:not(:placeholder-shown) + label{
 
@@ -788,10 +794,22 @@ function finalSubmit(){
     return;
   }
 
-  if(!hasSigned){
-    alert("✍️ Signature is required to proceed.");
-    return;
+let signData = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+
+let blank = true;
+
+for(let i=0;i<signData.length;i+=4){
+
+  if(signData[i+3] !== 0){
+    blank = false;
+    break;
   }
+}
+
+if(blank){
+  alert("✍️ Signature is required");
+  return;
+}
 
   // STEP CHANGE
   document.getElementById("step4").classList.remove("active");
@@ -904,10 +922,8 @@ function draw(e){
 
   let pos = getPosition(e);
 
-  requestAnimationFrame(()=>{
-    ctx.lineTo(pos.x,pos.y);
-    ctx.stroke();
-  });
+  ctx.lineTo(pos.x,pos.y);
+  ctx.stroke();
 }
 
 // STOP DRAW
