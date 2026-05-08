@@ -518,14 +518,13 @@ video{
 }
 
 /* LABEL */
+/* DEFAULT CENTER */
 .field label{
   position:absolute;
-
   left:14px;
   top:50%;
-
   transform:translateY(-50%);
-
+  
   font-size:16px;
   font-weight:500;
 
@@ -537,23 +536,23 @@ video{
 
   line-height:1.2;
 
-  z-index:99;
-
   pointer-events:none;
 
   transition:.18s ease;
 
-  box-shadow:0 0 0 6px #fff;
+  z-index:2;
+
+  box-shadow:0 0 0 5px #fff;
 }
 
-/* FLOAT */
+/* FLOAT ONLY ON FOCUS OR VALID */
 .field input:focus + label,
-.field input:not(:placeholder-shown) + label{
+.field input:valid + label{
 
   top:0;
+  transform:translateY(-50%);
 
   font-size:12px;
-
   font-weight:700;
 
   color:#2563eb;
