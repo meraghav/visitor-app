@@ -1077,18 +1077,26 @@ function finalSubmit(){
   let url = "https://script.google.com/macros/s/AKfycbzyduPQRo4dyp6Q0lCrw-LIS0bNb6m2wZC_H1DxxxNkCvXyBwWY5RxZlcotWh9fYAdt/exec";
 
   fetch(url, {
-    method: "POST",
-    body: JSON.stringify({
-      key: "Z1TECH123",
-      type: "visitor",
-      name: document.getElementById("name").value,
-      meet: document.getElementById("meet").value,
-      purpose: document.getElementById("purpose").value,
-      mobile: document.getElementById("mobile").value,
-      address: document.getElementById("address").value,
-      photo: photoData,
-      sign: document.getElementById("signPad").toDataURL("image/png")
-    })
+  method: "POST",
+  body: JSON.stringify({
+  key: "Z1TECH123",
+  type: "visitor",
+
+  name: document.getElementById("name").value,
+  meet: document.getElementById("meet").value,
+  purpose: document.getElementById("purpose").value,
+  mobile: document.getElementById("mobile").value,
+  address: document.getElementById("address").value,
+
+  inTime: "",
+  outTime: "",
+  totalTime: "",
+
+  status: "IN",
+
+  photo: photoData,
+  sign: document.getElementById("signPad").toDataURL("image/png")
+})
   })
   .then(res => res.text())
   .then(res => {
