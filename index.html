@@ -30,37 +30,39 @@ html, body{
 /* CONTAINER */
 .container{
   width:100%;
-  min-height:100vh;
+  min-height:100dvh;
+
   display:flex;
   justify-content:center;
-  align-items:center;
-  padding:20px;
+  align-items:flex-start;
+
+  padding:14px;
   box-sizing:border-box;
 }
 
  /* CARD */
 .card{
   position:relative;
-  width:100%;
-  max-width:430px;
 
-  min-height:92dvh;
+  width:min(100%,430px);
+
+  min-height:auto;
+
+  margin:auto;
+
+  box-sizing:border-box;
+
+  background:rgba(255,255,255,0.95);
+
+  border-radius:28px;
+
+  padding:24px 18px 40px;
 
   box-shadow:0 10px 30px rgba(0,0,0,0.08);
 
   border:1px solid rgba(255,255,255,0.5);
 
-  background:rgba(255,255,255,0.95);
-
   backdrop-filter:blur(12px);
-
-  padding:28px 20px 70px;
-
-  box-sizing:border-box;
-
-  border-radius:32px;
-
-  margin:auto;
 
   transform:translateX(40px);
   opacity:0;
@@ -99,21 +101,28 @@ html, body{
 
 @media (max-width:768px){
 
+  body{
+    overflow-x:hidden;
+  }
+
   .container{
-    padding:10px;
+    padding:12px;
     align-items:flex-start;
   }
 
   .card{
-    min-height:auto;
-    height:auto;
 
-    padding:20px 16px 40px;
+    width:100%;
+
+    max-width:420px;
+
+    min-height:auto;
 
     border-radius:24px;
 
-    margin-top:10px;
-    margin-bottom:10px;
+    padding:20px 16px 32px;
+
+    margin:0 auto 20px auto;
   }
 
   #step1{
@@ -123,14 +132,14 @@ html, body{
   }
 
   .camera{
-    width:72vw;
-    height:72vw;
+    width:min(78vw,300px);
+    height:min(78vw,300px);
   }
 
   button{
-    height:58px;
+    height:56px;
     font-size:16px;
-    margin-top:24px;
+    margin-top:22px;
   }
 
   .field input{
@@ -141,6 +150,7 @@ html, body{
     height:180px;
   }
 }
+
   
 #loader p{
   margin-top:18px;
@@ -232,8 +242,14 @@ html, body{
 }
 
 /* ACTIVE */
-#step5.active{
+.step.active{
   display:flex;
+  flex-direction:column;
+
+  opacity:1;
+  transform:translateX(0);
+
+  animation:slidePage .4s ease;
 }
 
 /* RAINBOW ANIMATION */
