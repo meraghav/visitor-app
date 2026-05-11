@@ -30,7 +30,7 @@ html, body{
 /* CONTAINER */
 .container{
   width:100%;
-  min-height:100dvh;
+  min-height:100svh;
 
   display:flex;
   justify-content:center;
@@ -63,13 +63,6 @@ html, body{
   border:1px solid rgba(255,255,255,0.5);
 
   backdrop-filter:blur(12px);
-
-  transform:translateX(40px);
-  opacity:0;
-
-  transition:
-    transform 0.45s ease,
-    opacity 0.45s ease;
 }
   
   .card::before{
@@ -160,7 +153,7 @@ html, body{
 }
 /* STEP CENTER */
 #step1{
-  min-height:100vh;
+  min-height:100svh;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -279,13 +272,6 @@ html, body{
   transform:translateX(30px);
 }
 
-.step.active{
-  display:block;
-  opacity:1;
-  transform:translateX(0);
-  animation:slidePage .4s ease;
-}
-
 @keyframes slidePage{
 
   from{
@@ -304,11 +290,6 @@ html, body{
 }
   
 /* ACTIVE STEP */
-.active{
-  display:block;
-  transform:translateX(0);
-  opacity:1;
-}
 
 /* TOP SPACING */
 .top{
