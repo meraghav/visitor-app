@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <meta name="viewport"
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+minimum-scale=1,
+user-scalable=no,
+viewport-fit=cover">
 
 <style>
   body{
@@ -25,12 +31,14 @@
 html, body{
   width:100%;
   min-height:100%;
+  touch-action:manipulation;
+  overscroll-behavior:none;
 }
 
 /* CONTAINER */
 .container{
   width:100%;
-  min-height:100svh;
+  min-height:100dvh;
 
   display:flex;
   justify-content:center;
@@ -63,6 +71,13 @@ html, body{
   border:1px solid rgba(255,255,255,0.5);
 
   backdrop-filter:blur(12px);
+
+  transform:translateX(40px);
+  opacity:0;
+
+  transition:
+    transform 0.45s ease,
+    opacity 0.45s ease;
 }
   
   .card::before{
@@ -153,7 +168,7 @@ html, body{
 }
 /* STEP CENTER */
 #step1{
-  min-height:100svh;
+  min-height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -288,8 +303,6 @@ html, body{
       scale(1);
   }
 }
-  
-/* ACTIVE STEP */
 
 /* TOP SPACING */
 .top{
@@ -1260,7 +1273,18 @@ function clearSign() {
 
   document.getElementById('progressBar').style.width=widths[step];
 }
+  
+let lastTouchEnd = 0;
 
+document.addEventListener('touchend', function (event) {
+  let now = (new Date()).getTime();
+
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+
+  lastTouchEnd = now;
+}, false);
 </script>
 
 </body>
