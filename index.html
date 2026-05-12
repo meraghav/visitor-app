@@ -110,6 +110,8 @@ body{
 
   html,
   body{
+    margin:0;
+    padding:0;
     width:100%;
     height:100%;
     overflow:hidden;
@@ -121,53 +123,71 @@ body{
   }
 
   .container{
+    width:100vw;
+    height:100dvh;
+    padding:0;
+    margin:0;
+    display:block;
+  }
 
-  width:100vw;
-  height:100dvh;
+  .step{
+    display:none;
+  }
 
-  padding:0;
-  margin:0;
+  .step.active{
 
-  display:block;
-}
-
-.card{
-
-  width:100% !important;
-  max-width:none !important;
-
-  min-width:100% !important;
-
-  height:100dvh;
-
-  margin:0 !important;
-
-  border-radius:0;
-
-  padding:24px 18px 40px;
-
-  box-sizing:border-box;
-
-  overflow-y:auto;
-
-  box-shadow:none;
-}
-
-  #step1{
+    display:flex !important;
+    flex-direction:column;
 
     width:100vw;
     height:100dvh;
 
-    padding:20px;
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    text-align:center;
+    margin:0;
+    padding:20px 16px 30px;
 
     box-sizing:border-box;
+
+    border-radius:0;
+
+    overflow-y:auto;
+
+    position:fixed;
+    inset:0;
+
+    background:#fff;
+
+    opacity:1;
+    transform:none;
+  }
+
+  .card{
+    max-width:none !important;
+    min-width:100% !important;
+    width:100% !important;
+
+    height:100dvh;
+
+    margin:0 !important;
+
+    border-radius:0 !important;
+
+    box-shadow:none !important;
+
+    padding:20px 16px 40px;
+
+    overflow-y:auto;
+  }
+
+  #step1{
+    width:100vw;
+    height:100dvh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    text-align:center;
   }
 
 }
@@ -316,12 +336,8 @@ body{
   }
 }
   
-/* ACTIVE STEP */
-.active{
-  display:block;
-  transform:translateX(0);
-  opacity:1;
-}
+
+
 
 /* TOP SPACING */
 .top{
@@ -772,7 +788,6 @@ input,
 select,
 textarea{
   font-size:16px !important;
-  transform:none !important;
 }
   
 .field{
