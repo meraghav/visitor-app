@@ -134,31 +134,32 @@ body{
     display:none;
   }
 
+/* ACTIVE STEP */
+.step.active{
+  display:flex !important;
+  flex-direction:column;
+  opacity:1;
+  transform:translateX(0);
+}
+
+/* MOBILE */
+@media (max-width:768px){
+
   .step.active{
 
-    display:flex !important;
-    flex-direction:column;
+    width:100%;
+    min-height:100dvh;
 
-    width:100vw;
-    height:100dvh;
-
-    margin:0;
-    padding:20px 16px 30px;
+    padding:20px 16px 40px;
 
     box-sizing:border-box;
 
-    border-radius:0;
-
     overflow-y:auto;
 
-    position:fixed;
-    inset:0;
-
-    background:#fff;
-
-    opacity:1;
-    transform:none;
+    background:transparent;
   }
+
+}
 
   .card{
     max-width:none !important;
