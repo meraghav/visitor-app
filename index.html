@@ -975,6 +975,9 @@ Verify OTP
 let stream;
 let photoData="";
 
+let confirmationResult;
+let mobileVerified = false;
+
 // 🔥 TYPING EFFECT
 let text="Welcome to Z1Tech 🙏";
 let i=0;
@@ -1018,13 +1021,17 @@ typing();
 
 const auth = firebase.auth();
 
-  window.recaptchaVerifier =
-new firebase.auth.RecaptchaVerifier(
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
   'recaptcha-container',
   {
-    size: 'invisible'
+    size: 'invisible',
+    callback: function(response) {
+      console.log("Recaptcha Verified");
+    }
   }
 );
+
+recaptchaVerifier.render();
 
 // NEXT STEP
 function nextStep(){
@@ -1313,7 +1320,7 @@ function clearSign() {
   document.getElementById('progressBar').style.width=widths[step];
 }
 
-  function sendOTP(){
+function sendOTP(){
 
   let mobile = document.getElementById("mobile").value.trim();
 
@@ -1324,28 +1331,33 @@ function clearSign() {
 
   let phoneNumber = "+91" + mobile;
 
+  let appVerifier = window.recaptchaVerifier;
+
   firebase.auth().signInWithPhoneNumber(
     phoneNumber,
-    recaptchaVerifier
+    appVerifier
   )
   .then(function(result){
 
     confirmationResult = result;
 
-    alert("OTP Sent Successfully");
+    alert("OTP Sent Successfully ✅");
 
     document.getElementById("otpBox").style.display = "block";
+
     document.getElementById("verifyOtpBtn").style.display = "block";
 
   })
   .catch(function(error){
+
+    console.log(error);
 
     alert(error.message);
 
   });
 }
 
-  function verifyOTP(){
+function verifyOTP(){
 
   let otp = document.getElementById("otp").value.trim();
 
@@ -1355,16 +1367,23 @@ function clearSign() {
   }
 
   confirmationResult.confirm(otp)
+
   .then(function(result){
 
     mobileVerified = true;
 
     alert("Mobile Verified ✅");
 
-    nextStep();
+    document.getElementById("sendOtpBtn").innerHTML =
+      "Verified ✅";
+
+    document.getElementById("sendOtpBtn").disabled = true;
 
   })
+
   .catch(function(error){
+
+    console.log(error);
 
     alert("Invalid OTP");
 
