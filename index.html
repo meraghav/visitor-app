@@ -913,6 +913,8 @@ Send OTP
 Verify OTP
 </button>
 
+<div id="recaptcha-container"></div>
+
 <div class="field">
 <input type="text" id="address" placeholder=" " required>
 <label for="address">Address</label>
@@ -1015,6 +1017,14 @@ typing();
  firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
+
+  window.recaptchaVerifier =
+new firebase.auth.RecaptchaVerifier(
+  'recaptcha-container',
+  {
+    size: 'invisible'
+  }
+);
 
 // NEXT STEP
 function nextStep(){
