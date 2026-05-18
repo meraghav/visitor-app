@@ -905,6 +905,8 @@ video{
 <label for="mobile">Mobile</label>
 </div>
 
+<div id="recaptcha-container"></div>
+
 <button type="button" onclick="sendOTP()" id="sendOtpBtn">
 Send OTP
 </button>
@@ -917,8 +919,6 @@ Send OTP
 <button type="button" onclick="verifyOTP()" id="verifyOtpBtn" style="display:none;">
 Verify OTP
 </button>
-
-<div id="recaptcha-container"></div>
 
 
 <button type="button" onclick="nextStep()">Next</button>
@@ -1007,6 +1007,25 @@ function typing(){
 
 typing();
 
+  window.onload = function () {
+
+  window.recaptchaVerifier =
+  new firebase.auth.RecaptchaVerifier(
+    'recaptcha-container',
+    {
+      size: 'normal',
+      callback: function(response) {
+
+        console.log("Recaptcha solved");
+
+      }
+    }
+  );
+
+  recaptchaVerifier.render();
+
+};
+
  const firebaseConfig = {
     apiKey: "AIzaSyBRcIqyFEdb8ON13a49ziiP2CPe-1GjPqE",
     authDomain: "visitor-mobile.firebaseapp.com",
@@ -1020,18 +1039,6 @@ typing();
  firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
-
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-  'recaptcha-container',
-  {
-    size: 'invisible',
-    callback: function(response) {
-      console.log("Recaptcha Verified");
-    }
-  }
-);
-
-recaptchaVerifier.render();
 
 // NEXT STEP
 function nextStep(){
